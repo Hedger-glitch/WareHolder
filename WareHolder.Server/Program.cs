@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Hosting.Builder;
 using Microsoft.EntityFrameworkCore;
 using WareHolder.Server.Data;
+using WareHolder.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +14,19 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
