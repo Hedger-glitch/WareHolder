@@ -14,7 +14,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+
 builder.Services.AddScoped<ISupplierService, SupplierService>();
+
+builder.Services.AddScoped<IShelfService, ShelfService>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 
