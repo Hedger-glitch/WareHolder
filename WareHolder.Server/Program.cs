@@ -22,6 +22,8 @@ builder.Services.AddScoped<IShelfService, ShelfService>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

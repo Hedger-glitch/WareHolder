@@ -6,44 +6,42 @@ namespace WareHolder.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ShelfController : ControllerBase
+    public class WarehousesController : ControllerBase
     {
-        private readonly IShelfService _shelfService;
+        private readonly IWarehouseService _warehouseService;
 
-        ShelfController(IShelfService shelfService)
+        public WarehousesController(IWarehouseService warehouseService)
         {
-            _shelfService = shelfService;
+            _warehouseService = warehouseService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _shelfService.GetAllAsync());
+            return Ok(await _warehouseService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var shelf = await _shelfService.GetByIdAsync(id);
-            if (shelf == null) return NotFound();
-            return Ok(shelf);
+            var warehouse = await _warehouseService.GetByIdAsync(id);
+            if (warehouse == null) return NotFound();
+            return Ok(warehouse);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateShelfDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateWarehouseDto dto)
         {
-            var created = await _shelfService.CreateAsync(dto);
+            var created = await _warehouseService.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted = await _shelfService.DeleteAsync(id);
+            var deleted = await _warehouseService.DeleteAsync(id);
             if (!deleted) return NotFound();
             return NoContent();
         }
     }
-
-
 }

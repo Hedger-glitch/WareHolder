@@ -6,40 +6,40 @@ namespace WareHolder.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SupplierController : ControllerBase
+    public class ShelvesController : ControllerBase
     {
-        private readonly ISupplierService _supplierService;
+        private readonly IShelfService _shelfService;
 
-        public SupplierController(ISupplierService supplierService)
+        public ShelvesController(IShelfService shelfService)
         {
-            _supplierService = supplierService;
+            _shelfService = shelfService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _supplierService.GetAllAsync());
+            return Ok(await _shelfService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var supplier = await _supplierService.GetByIdAsync(id);
-            if (supplier == null) return NotFound();
-            return Ok(supplier);
+            var shelf = await _shelfService.GetByIdAsync(id);
+            if (shelf == null) return NotFound();
+            return Ok(shelf);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateSupplierDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateShelfDto dto)
         {
-            var created = await _supplierService.CreateAsync(dto);
+            var created = await _shelfService.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted = await _supplierService.DeleteAsync(id);
+            var deleted = await _shelfService.DeleteAsync(id);
             if (!deleted) return NotFound();
             return NoContent();
         }
